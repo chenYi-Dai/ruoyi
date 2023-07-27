@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -32,9 +33,9 @@ public class MessageCodeController {
 
     @ApiOperation(value = "获取短信验证码")
     @RequestMapping(value = "/getCode", method = RequestMethod.GET)
-    public AjaxResult getPhoneMessageCode(String phone) {
+    public AjaxResult getPhoneMessageCode(@RequestParam(value = "phone") String phone) {
         //校验手机号码
-        if(checkPhone(phone)){
+        if(!checkPhone(phone)){
             return AjaxResult.error(MessageUtils.message("user.phone.error"));
         }
         String uuid = IdUtils.simpleUUID();
